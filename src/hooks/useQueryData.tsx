@@ -25,6 +25,8 @@ export const useProductData = () =>
   useQueryData(["product"], `api/product/list/`);
 export const useOrderProductData = () =>
   useQueryData(["buy-product"], `api/buy-product/list/`);
+export const useTrackOrderData = () =>
+  useQueryData(["track-order"], `api/buy-product/track-order/list`);
 
 export const useContactData = () => useQueryData(["contacts"], "api/contacts");
 export const useAdminData = () => useQueryData(["admins"], "api/admins");

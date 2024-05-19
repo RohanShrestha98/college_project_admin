@@ -8,6 +8,7 @@ import Product from './pages/product/Product'
 import AddProduct from './pages/product/AddProduct'
 import OrderProduct from './pages/orderproduct/OrderProduct'
 import { Toaster } from 'react-hot-toast';
+import DeliveredProduct from './pages/deliveredproduct/DeliveredProduct'
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path='/product' element={<Product />} />
           <Route path='/add-product' element={<AddProduct />} />
           <Route path='/order-product' element={<OrderProduct />} />
+          <Route path='/delivered-product' element={<DeliveredProduct />} />
         </Route>
       </Routes>
     </BrowserRouter>

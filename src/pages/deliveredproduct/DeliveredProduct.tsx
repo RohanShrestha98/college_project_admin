@@ -1,24 +1,23 @@
 import SearchPagination from "@/components/SearchPagination";
 import { ReactTable } from "../../components/Table";
 import { useState } from "react";
-import { useOrderProductData } from "@/hooks/useQueryData";
+import { useOrderProductData, useTrackOrderData } from "@/hooks/useQueryData";
 import { ConvertHtmlToPlainText } from "@/utils/convertHtmlToPlainText";
 import moment from "moment";
 import { useStatusToggleMutation } from "@/hooks/useMutateData";
 import toast from "react-hot-toast";
 
 
-export default function OrderProduct() {
+export default function DeliveredProduct() {
     const [searchText, setSearchText] = useState("")
     const [selectedField, setSelectedField] = useState("")
     const [pageSize, setPageSize] = useState("10")
     const [page, setPage] = useState(1)
-    const { data, isLoading, isError } = useOrderProductData()
+    const { data, isLoading, isError } = useTrackOrderData()
     const [statusToggle, setStatusToggle] = useState(false)
     const [selectedStatus, setSelectedStatus] = useState()
     const [selectedProduct, setSelectedProduct] = useState()
     const statusChangeMutation = useStatusToggleMutation()
-    const filterDeliveredData = data?.data?.filter((item) => item?.status !== "Delivered")
     const status = [
         {
             value: "Pending",
@@ -139,25 +138,9 @@ export default function OrderProduct() {
             cell: info => {
                 return (
                     <div className="relative w-[90px] cursor-pointer">
-                        <p onClick={() => {
-                            setStatusToggle(!statusToggle)
-                            setSelectedProduct(info?.row?.original?._id)
-                        }} className={`w-[90px] ${(info?.row?.original?.status === "Pending" || info?.row?.original?.status === "pending") ? "bg-yellow-500 " : "bg-green-500 "}text-center py-1 rounded-full text-white `}>
+                        <p className={`w-[90px] ${(info?.row?.original?.status === "Pending" || info?.row?.original?.status === "pending") ? "bg-yellow-500 " : "bg-green-500 "}text-center py-1 rounded-full text-white `}>
                             {info?.row?.original?.status}
                         </p>
-                        {
-                            statusToggle && selectedProduct === info?.row?.original?._id && <div className="absolute z-20 bg-white shadow-md w-[100px]  mt-1 py-2 flex flex-col gap-2">
-                                {
-                                    status?.map((item) => {
-                                        return <p onClick={() => {
-                                            setSelectedStatus(item)
-                                            handleStatusChange(info?.row?.original, info?.row?.original?._id, item?.value)
-                                            setStatusToggle(!statusToggle)
-                                        }} key={item?.value} className={`px-4 py-[2px] hover:bg-gray-100 ${selectedStatus?.value === item?.value ? "bg-gray-100" : ""}`}>{item?.label}</p>
-                                    })
-                                }
-                            </div>
-                        }
                     </div>
 
 
@@ -180,7 +163,7 @@ export default function OrderProduct() {
                     isLoading={isLoading}
                     isError={isError}
                     columns={columns}
-                    data={filterDeliveredData ?? []}
+                    data={data?.data ?? []}
                     currentPage={1}
                     totalPage={1}
                 />

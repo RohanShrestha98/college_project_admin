@@ -39,3 +39,5 @@ export const useCategoryMutation = () =>
   useMutate(["category"], "api/category/");
 export const useProductMutation = () =>
   useMutate(["product"], "api/product/");
+export const useStatusToggleMutation = () =>
+  useMutate(["buy-product"], "api/buy-product/");

@@ -34,6 +34,12 @@ export default function Sidebar() {
       icon: <FaCartPlus />,
       link: "/order-product",
     },
+    {
+      id: 4,
+      name: "Delivered Product",
+      icon: <FaCartPlus />,
+      link: "/delivered-product",
+    },
   ];
 
   const handleActive = (item) => {
@@ -50,11 +56,10 @@ export default function Sidebar() {
             <div
               key={item?.id}
               onClick={() => handleActive(item)}
-              className={`flex font-medium items-center  gap-2 ${
-                item?.link === active
-                  ? "text-blue-500 cursor-default"
-                  : "text-gray-100 cursor-pointer"
-              }`}
+              className={`flex font-medium items-center  gap-2 ${item?.link === active
+                ? "text-blue-500 cursor-default"
+                : "text-gray-100 cursor-pointer"
+                }`}
             >
               <div>{item?.icon}</div>
               <div>{item?.name}</div>
