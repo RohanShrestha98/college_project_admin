@@ -1,12 +1,9 @@
 import SearchPagination from "@/components/SearchPagination";
 import { ReactTable } from "../../components/Table";
 import { useState } from "react";
-import { useOrderProductData, useTrackOrderData } from "@/hooks/useQueryData";
+import { useTrackOrderData } from "@/hooks/useQueryData";
 import { ConvertHtmlToPlainText } from "@/utils/convertHtmlToPlainText";
 import moment from "moment";
-import { useStatusToggleMutation } from "@/hooks/useMutateData";
-import toast from "react-hot-toast";
-
 
 export default function DeliveredProduct() {
     const [searchText, setSearchText] = useState("")
@@ -14,37 +11,8 @@ export default function DeliveredProduct() {
     const [pageSize, setPageSize] = useState("10")
     const [page, setPage] = useState(1)
     const { data, isLoading, isError } = useTrackOrderData()
-    const [statusToggle, setStatusToggle] = useState(false)
-    const [selectedStatus, setSelectedStatus] = useState()
-    const [selectedProduct, setSelectedProduct] = useState()
-    const statusChangeMutation = useStatusToggleMutation()
-    const status = [
-        {
-            value: "Pending",
-            label: "Pending"
-        },
-        {
-            value: "On the way",
-            label: "On the way"
-        },
-        {
-            value: "Delivered",
-            label: "Delivered"
-        },
-    ]
+    console.log("data", data)
 
-    const handleStatusChange = async (data, id, status) => {
-        const postData = {
-            ...data,
-            status: status
-        }
-        try {
-            const response = await statusChangeMutation.mutateAsync(["patch", `update/${id}`, postData])
-            toast.success("Order status change successfully")
-        } catch (err) {
-            console.log("err", err)
-        }
-    }
 
 
     const columns = [

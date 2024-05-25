@@ -6,6 +6,8 @@ import { ConvertHtmlToPlainText } from "@/utils/convertHtmlToPlainText";
 import moment from "moment";
 import { useStatusToggleMutation } from "@/hooks/useMutateData";
 import toast from "react-hot-toast";
+import { FaRegTrashCan } from "react-icons/fa6";
+import DeleteModal from "@/components/DeleteModal";
 
 
 export default function OrderProduct() {
@@ -18,7 +20,7 @@ export default function OrderProduct() {
     const [selectedStatus, setSelectedStatus] = useState()
     const [selectedProduct, setSelectedProduct] = useState()
     const statusChangeMutation = useStatusToggleMutation()
-    const filterDeliveredData = data?.data?.filter((item) => item?.status !== "Delivered")
+    const filterDeliveredData = data?.data?.filter((item) => item?.status !== "Delivered" && item?.categoryField)
     const status = [
         {
             value: "Pending",
@@ -164,6 +166,23 @@ export default function OrderProduct() {
                 )
             },
             header: () => <span>Status</span>,
+            footer: props => props.column.id,
+        },
+        {
+            accessorFn: row => row,
+            id: "action",
+            cell: (info) => {
+                return (
+                    <div className="flex gap-2 text-base justify-center">
+                        <DeleteModal asChild desc={"Are you sure you want to cancel this order product ?"} title={"Cancel Order Product"} id={info?.row?.original?._id}>
+                            <p className="text-red-600 font-semibold text-sm cursor-pointer">
+                                Cancel
+                            </p>
+                        </DeleteModal>
+                    </div>
+                );
+            },
+            header: () => <span className='flex justify-center'>Action</span>,
             footer: props => props.column.id,
         },
     ]

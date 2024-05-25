@@ -5,7 +5,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import Button from "@/ui/Button"
-import { useCategoryMutation, useProductMutation } from "@/hooks/useMutateData";
+import { useCategoryMutation, useProductMutation, useStatusToggleMutation } from "@/hooks/useMutateData";
 import 'react-quill/dist/quill.snow.css';
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -14,18 +14,19 @@ import toast from "react-hot-toast";
 
 export default function DeleteModal({ asChild, children, title, desc, id }) {
     const [open, setOpen] = useState(false)
+    const orderProductMutation = useStatusToggleMutation()
     const categoryMutation = useCategoryMutation()
     const productMutation = useProductMutation()
 
     const location = useLocation()
-    const deleteMutation = location?.pathname == "/category" ? categoryMutation : productMutation
+    const deleteMutation = location?.pathname == "/order-product" ? orderProductMutation : location?.pathname == "/category" ? categoryMutation : productMutation
 
 
     const handleDelete = async () => {
         try {
             const response = await deleteMutation.mutateAsync(["delete", `delete/${id}/`])
             setOpen(false)
-            location?.pathname == "/category" ? toast.success("Category deleted successfully") : toast.success("Product Deleted successfully")
+            location?.pathname == "/order-product" ? toast.success("Cancel order successfully") : location?.pathname == "/category" ? toast.success("Category deleted successfully") : toast.success("Product Deleted successfully")
         } catch (err) {
             console.log("err", err)
         }
