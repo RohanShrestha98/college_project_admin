@@ -37,7 +37,7 @@ const Login = () => {
     try {
       const result = await authMutation.mutateAsync(["post", "", data]);
       console.log("result", result)
-      setUser({ token: result?.accessToken, refresh: result?.accessToken });
+      setUser({ token: result?.accessToken, refresh: result?.accessToken, username: result?.data?.username, email: result?.data?.email });
       console.log("Login Successfully")
       navigate("/");
       reset();

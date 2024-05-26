@@ -9,6 +9,7 @@ import AddProduct from './pages/product/AddProduct'
 import OrderProduct from './pages/orderproduct/OrderProduct'
 import { Toaster } from 'react-hot-toast';
 import DeliveredProduct from './pages/deliveredproduct/DeliveredProduct'
+import Dashboard from './pages/dashboard/Dashboard'
 
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
           <Route path='/login' element={<Login />} />
         </Route>
         <Route element={<BaseLayout />}>
-          <Route path='/' element={<></>} />
+          <Route path='/' element={<Dashboard />} />
           <Route path='/category' element={<Category />} />
           <Route path='/product' element={<Product />} />
           <Route path='/add-product' element={<AddProduct />} />

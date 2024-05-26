@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTrackOrderData } from "@/hooks/useQueryData";
 import { ConvertHtmlToPlainText } from "@/utils/convertHtmlToPlainText";
 import moment from "moment";
+import DownloadPdf from "@/components/DownloadPdf";
 
 export default function DeliveredProduct() {
     const [searchText, setSearchText] = useState("")
@@ -11,7 +12,6 @@ export default function DeliveredProduct() {
     const [pageSize, setPageSize] = useState("10")
     const [page, setPage] = useState(1)
     const { data, isLoading, isError } = useTrackOrderData()
-    console.log("data", data)
 
 
 
@@ -116,6 +116,19 @@ export default function DeliveredProduct() {
             },
             header: () => <span>Status</span>,
             footer: props => props.column.id,
+        },
+        {
+            accessorFn: row => row,
+            id: "action",
+            cell: (info) => {
+                return (
+                    <div className="flex gap-2 text-base justify-center">
+                        <DownloadPdf productDetails={info?.row?.original} />
+                    </div>
+                );
+            },
+            header: () => <span className='flex justify-center'>Action</span>,
+            footer: props => props?.column?.id,
         },
     ]
 
